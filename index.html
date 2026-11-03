@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Magmetal | Consulta de Transportadoras</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <img src="img/maglogo.webp" alt="Magmetal">
+    <h1>Consulta de Transportadoras</h1>
+  </header>
+
+  <main>
+    <div class="filtros">
+      <input type="text" id="busca" placeholder="Buscar transportadora, região ou cidade...">
+      <select id="filtroRegiao">
+        <option value="">Todas as regiões</option>
+      </select>
+      <select id="filtroVeiculo">
+        <option value="">Todos os veículos</option>
+      </select>
+    </div>
+
+    <div id="lista"></div>
+  </main>
+
+  <script src="dados.js"></script>
+  <script src="cobertura.js"></script>
+  <script src="cobertura-efitrans.js"></script>
+  <script src="cobertura-turbo.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
