@@ -30,15 +30,26 @@ function linkWhatsapp(texto) {
   }).join("<br>");
 }
 
-function linkEmail(email) {
-  if (!email) return "Não informado";
-  return `<a href="mailto:${email}">${email}</a>`;
+// Aceita 1 ou mais e-mails no mesmo campo, separados por "/" ou ";".
+function linkEmail(texto) {
+  if (!texto) return "Não informado";
+  return texto.split(/\s*[\/;]\s*/).filter(function (e) {
+    return e.trim() !== "";
+  }).map(function (e) {
+    const email = e.trim();
+    return `<a href="mailto:${email}">${email}</a>`;
+  }).join("<br>");
 }
 
 // ---------- Partes do cartão ----------
 function textoSeis(t) {
   if (t.transporta6m === "sim") return "Sim";
-  if (t.transporta6m === "nao") return "Não";
+  if (t.transporta6m === "nao") {
+    if (t.comprimentoMaximoMetros) {
+      return "Não (máx. " + String(t.comprimentoMaximoMetros).replace(".", ",") + " m)";
+    }
+    return "Não";
+  }
   return "A confirmar";
 }
 
@@ -77,67 +88,106 @@ function desenharContato(titulo, c) {
   `;
 }
 
-function desenharCobertura(t, termo) {
-  const cidades = cobertura[t.id] || [];
-  if (cidades.length === 0) return "";
+// ---------- Cobertura por cidade ----------
+// Índice com os nomes já normalizados (sem acento/maiúscula): deixa a busca rápida.
+const cidadesNorm = {};
+Object.keys(cobertura).forEach(function (id) {
+  cidadesNorm[id] = cobertura[id].map(function (c) {
+    return normalizar(c.cidade);
+  });
+});
 
-  // Só aparecem as colunas que a transportadora realmente tem.
-  const colunas = [
-    { campo: "grupo", titulo: "Região" },
-    { campo: "prazo", titulo: "Prazo" },
-    { campo: "tipo", titulo: "Tipo" },
-    { campo: "filial", titulo: "Filial" },
-    { campo: "obs", titulo: "Obs." }
-  ].filter(function (col) {
+// Só aparecem as colunas que a transportadora realmente tem.
+const COLUNAS = [
+  { campo: "grupo", titulo: "Região" },
+  { campo: "uf", titulo: "UF" },
+  { campo: "prazo", titulo: "Prazo" },
+  { campo: "dias", titulo: "Dias" },
+  { campo: "tipo", titulo: "Tipo" },
+  { campo: "filial", titulo: "Filial" },
+  { campo: "tda", titulo: "TDA" },
+  { campo: "acima3m", titulo: "Acima de 3 m" },
+  { campo: "obs", titulo: "Obs." }
+];
+
+function nomeCidade(c) {
+  return c.cidade + (c.uf ? " (" + c.uf + ")" : "");
+}
+
+function detalhe(c) {
+  const partes = [];
+  if (c.grupo) partes.push(c.grupo);
+  if (c.prazo) partes.push(c.prazo);
+  if (c.dias) partes.push(c.dias);
+  if (c.tipo) partes.push(c.tipo);
+  if (c.filial) partes.push("filial " + c.filial);
+  if (c.tda) partes.push("TDA " + c.tda);
+  if (c.acima3m) partes.push("acima de 3 m: " + c.acima3m);
+  if (c.obs) partes.push(c.obs);
+  return partes.join(" · ");
+}
+
+// A tabela completa só é montada quando o vendedor abre a lista (veja o "toggle" mais abaixo).
+function tabelaCobertura(id) {
+  const cidades = cobertura[id] || [];
+  const colunas = COLUNAS.filter(function (col) {
     return cidades.some(function (c) { return c[col.campo]; });
   });
-
-  function detalhe(c) {
-    const partes = [];
-    if (c.grupo) partes.push(c.grupo);
-    if (c.prazo) partes.push(c.prazo);
-    if (c.tipo) partes.push(c.tipo);
-    if (c.filial) partes.push("filial " + c.filial);
-    if (c.obs) partes.push(c.obs);
-    return partes.join(" · ");
-  }
-
-  let destaque = "";
-  if (termo.length >= 2) {
-    const achadas = cidades.filter(function (c) {
-      return normalizar(c.cidade).includes(termo);
-    });
-    if (achadas.length > 0) {
-      destaque = '<ul class="achadas">' + achadas.map(function (c) {
-        const d = detalhe(c);
-        return `<li><strong>${c.cidade}</strong>${d ? ": " + d : ""}</li>`;
-      }).join("") + "</ul>";
-    }
-  }
-
   const cabecalho = "<th>Cidade</th>" + colunas.map(function (col) {
     return "<th>" + col.titulo + "</th>";
   }).join("");
-
   const linhas = cidades.map(function (c) {
     return "<tr><td>" + c.cidade + "</td>" + colunas.map(function (col) {
       return "<td>" + (c[col.campo] || "") + "</td>";
     }).join("") + "</tr>";
   }).join("");
+  return "<table><tr>" + cabecalho + "</tr>" + linhas + "</table>";
+}
+
+function desenharCobertura(t, termo) {
+  const cidades = cobertura[t.id] || [];
+  if (cidades.length === 0) return "";
+
+  let destaque = "";
+  if (termo.length >= 2) {
+    const achadas = cidades.filter(function (c, i) {
+      return cidadesNorm[t.id][i].includes(termo);
+    });
+    if (achadas.length > 0) {
+      const itens = achadas.slice(0, 10).map(function (c) {
+        const d = detalhe(c);
+        return `<li><strong>${nomeCidade(c)}</strong>${d ? ": " + d : ""}</li>`;
+      }).join("");
+      const mais = achadas.length > 10
+        ? `<li>… e mais ${achadas.length - 10} cidades (veja a lista completa abaixo)</li>`
+        : "";
+      destaque = `<ul class="achadas">${itens}${mais}</ul>`;
+    }
+  }
 
   return `
     ${destaque}
-    <details class="cobertura">
+    <details class="cobertura" data-id="${t.id}">
       <summary>Atende ${cidades.length} cidades</summary>
-      <table>
-        <tr>${cabecalho}</tr>
-        ${linhas}
-      </table>
+      <div class="tabela"></div>
     </details>
   `;
 }
 
+// Quando o vendedor abre "Atende N cidades", monta a tabela (só uma vez).
+lista.addEventListener("toggle", function (e) {
+  const d = e.target;
+  if (!d.classList || !d.classList.contains("cobertura") || !d.open) return;
+  const area = d.querySelector(".tabela");
+  if (area && area.innerHTML === "") area.innerHTML = tabelaCobertura(d.dataset.id);
+}, true);
+
+// ---------- Cartão ----------
 function desenharCartao(t, termo) {
+  const extras = (t.outrosContatos || []).map(function (e) {
+    return desenharContato(e.titulo, e);
+  }).join("");
+
   return `
     <div class="cartao">
       <h2>${t.nome}</h2>
@@ -151,6 +201,7 @@ function desenharCartao(t, termo) {
         ${desenharContato("Expedição", t.contatos.expedicao)}
         ${desenharContato("Financeiro", t.contatos.financeiro)}
         ${desenharContato("Comercial", t.contatos.comercial)}
+        ${extras}
       </div>
     </div>
   `;
@@ -182,8 +233,8 @@ function mostrarLista() {
 
   const filtradas = transportadoras.filter(function (t) {
     const alvo = normalizar(t.nome + " " + t.regioes.join(" ") + " " + (t.tiposVeiculo || []).join(" "));
-    const temCidade = termo.length >= 2 && (cobertura[t.id] || []).some(function (c) {
-      return normalizar(c.cidade).includes(termo);
+    const temCidade = termo.length >= 2 && (cidadesNorm[t.id] || []).some(function (nome) {
+      return nome.includes(termo);
     });
     const bateBusca = alvo.includes(termo) || temCidade;
     const bateRegiao = regiao === "" || t.regioes.includes(regiao) || t.regioes.includes("Nacional");

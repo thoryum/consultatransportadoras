@@ -140,3 +140,23 @@ a:hover {
   padding: 12px 12px 12px 28px;
   margin: 16px 0 0 0;
 }
+
+/* Mais de 3 contatos (extras): quebram em outra linha */
+.contatos {
+  flex-wrap: wrap;
+}
+
+.contato {
+  min-width: 200px;
+}
+
+/* Lista de cidades grande: rola dentro do cartão */
+.cobertura .tabela {
+  max-height: 420px;
+  overflow: auto;
+}
+
+.cobertura th {
+  position: sticky;
+  top: 0;
+}

@@ -202,7 +202,7 @@ const transportadoras = [
   },
   {
     id: "pelantir",
-    nome: "Tanea Alexandre Pelandir",
+    nome: "Tanea Alexandre Pelandir (Pelantir)",
     regioes: ["Curitiba", "Região Metropolitana de Curitiba", "União da Vitória", "Bituruna", "Guarapuava"],
     transporta6m: "nao",
     limitesPorRegiao: [],
@@ -223,32 +223,6 @@ const transportadoras = [
         telefone: null,
         whatsapp: "41 99717-8576",
         email: "cotacoes@pelantir.com.br"
-      }
-    }
-  },
-  {
-    id: "zambilog",
-    nome: "Zambilog",
-    regioes: ["Nacional"],
-    transporta6m: "sim",
-    limitesPorRegiao: [],
-    tiposVeiculo: ["Carreta", "Sider", "VUC", "Baú", "3/4", "Van"],
-    observacao: "Veículos: carreta sider, VUC baú, 3/4 sider e van. Capacidade para chapas, tubos e perfis de até 15,50 m. Mesmo contato para todos os departamentos.",
-    contatos: {
-      expedicao: {
-        telefone: null,
-        whatsapp: "41 98856-7434 (Paola)",
-        email: "rafaelzambiazi@zambilog.com.br"
-      },
-      financeiro: {
-        telefone: null,
-        whatsapp: "41 98856-7434 (Paola)",
-        email: "rafaelzambiazi@zambilog.com.br"
-      },
-      comercial: {
-        telefone: null,
-        whatsapp: "41 98856-7434 (Paola)",
-        email: "rafaelzambiazi@zambilog.com.br"
       }
     }
   },
@@ -279,5 +253,135 @@ const transportadoras = [
         obs: "O contato só é passado a clientes que têm tabela com a Transjoi."
       }
     }
+  },
+  {
+    id: "gamper",
+    nome: "Gamper",
+    regioes: ["PR", "SP"],
+    transporta6m: "sim",
+    limitesPorRegiao: [],
+    tiposVeiculo: ["Baú"],
+    observacao: "Só trabalha com caminhão baú. Para SP, 6 m somente sob consulta, informando o CEP à filial: em geral não leva 6 m, porque muitas regiões restringem veículo grande. Sem restrição de 6 m em Vila Maria, Vila Guilherme, Guarulhos, São Bernardo do Campo, Santo André e Diadema. Dias e período (manhã/tarde) de coleta e entrega: confirmar com a unidade.",
+    contatos: {
+      expedicao: {
+        telefone: "41 2112-4144 (Curitiba) / 42 2101-5800 (Ponta Grossa) / 11 5668-9800 (São Paulo)",
+        whatsapp: "41 99207-8244 (Curitiba) / 42 99127-9123 (Ponta Grossa) / 11 99679-4798 (São Paulo)",
+        email: null
+      },
+      financeiro: {
+        telefone: "41 2112-4144",
+        whatsapp: "41 9189-0680",
+        email: null,
+        obs: "Financeiro Curitiba."
+      },
+      comercial: {
+        telefone: "41 2112-4144",
+        whatsapp: "41 99207-8244",
+        email: null
+      }
+    }
+  },
+  {
+    id: "aceville",
+    nome: "Aceville",
+    regioes: ["PR", "SC", "RS", "SP", "MG", "GO", "DF"],
+    transporta6m: "nao",
+    comprimentoMaximoMetros: 3,
+    limitesPorRegiao: [],
+    tiposVeiculo: [],
+    observacao: "Rotas a partir de Curitiba. Em geral não atende acima de 3 m; em algumas cidades atende (veja a coluna \"Acima de 3 m\" na lista de cidades). Prazos em dias úteis após a coleta. Rastreios: tratados no grupo com Giovana e Nilce. Planilha de 01/10/2026, sujeita a alterações sem aviso.",
+    contatos: {
+      expedicao: {
+        telefone: "41 3266-0484",
+        whatsapp: "41 99992-1097 (Tobias e Marlon)",
+        email: "coleta.ctb@aceville.com.br / operacional2.ctb@aceville.com.br",
+        obs: "Coletas e operacional em Curitiba."
+      },
+      financeiro: {
+        telefone: "41 3266-0484",
+        whatsapp: "41 99712-0151",
+        email: "cobranca.ctb@aceville.com.br"
+      },
+      comercial: {
+        telefone: "41 3266-0484",
+        whatsapp: null,
+        email: "cotacao.ctb@aceville.com.br",
+        obs: "Cotações: Felipe. O WhatsApp informado, (41) 99752-50297, tem um dígito a mais: confirmar."
+      }
+    },
+    outrosContatos: [
+      {
+        titulo: "Pendências, avarias e devoluções",
+        whatsapp: "47 99984-1798 (Jéssica)",
+        email: "pendencia.ctb@aceville.com.br"
+      },
+      {
+        titulo: "SAC / Relacionamento",
+        email: "relacionamento.ctb@aceville.com.br",
+        obs: "Giovana."
+      }
+    ]
+  },
+  {
+    id: "tw",
+    nome: "TW Transportes",
+    regioes: [],
+    transporta6m: "nao",
+    comprimentoMaximoMetros: 3.5,
+    limitesPorRegiao: [],
+    tiposVeiculo: [],
+    observacao: "Carga fracionada. Limite padrão de 3,5 m, podendo variar conforme a unidade responsável pela coleta e entrega. Regiões atendidas, prazos e cotações: pedir ao comercial.",
+    contatos: {
+      expedicao: {
+        telefone: null,
+        whatsapp: null,
+        email: null
+      },
+      financeiro: {
+        telefone: null,
+        whatsapp: "51 99294-9000 (Vinicius Pelissari)",
+        email: "vinicius.pelissa@twtransportes.com.br"
+      },
+      comercial: {
+        telefone: null,
+        whatsapp: null,
+        email: "josue.rosa@twtransportes.com.br",
+        obs: "Josué Rosa."
+      }
+    }
+  },
+  {
+    id: "melck",
+    nome: "Melck",
+    regioes: ["Nacional"],
+    transporta6m: "a_confirmar",
+    limitesPorRegiao: [],
+    tiposVeiculo: [],
+    observacao: "Atende todo o Brasil. Prazos após a coleta: Sul, Centro-Oeste e Sudeste, 24, 48 ou 72 horas úteis; Nordeste, normalmente 3 a 7 dias úteis. Varia conforme a cidade de coleta e de destino.",
+    contatos: {
+      expedicao: {
+        telefone: null,
+        whatsapp: "41 9284-0806",
+        email: "daferson.goncalves@melck.com.br / camilly.horing@melck.com.br / karoline.souza@melck.com.br",
+        obs: "Coletas e fiscal."
+      },
+      financeiro: {
+        telefone: null,
+        whatsapp: "41 9138-0617",
+        email: "financeiro@melck.com.br / maria.silveira@melck.com.br / ana.santiago@melck.com.br"
+      },
+      comercial: {
+        telefone: null,
+        whatsapp: "41 9105-8058 (Izadora Machado) / 41 9987-8666 (Victoria Borba)",
+        email: "izadora.machado@melck.com.br / victoria.borba@melck.com.br",
+        obs: "Izadora é analista e Victoria é coordenadora."
+      }
+    },
+    outrosContatos: [
+      {
+        titulo: "Monitoramento",
+        email: "jefferson@melck.com.br / monitoramento.melck@melck.com.br"
+      }
+    ]
   }
 ];
