@@ -191,6 +191,7 @@ function desenharCartao(t, termo) {
   return `
     <div class="cartao">
       <h2>${t.nome}</h2>
+      <button type="button" class="cotar" data-cotar="${t.id}">Registrar cotação</button>
       <p><strong>Regiões:</strong> ${textoRegioes(t)}</p>
       <p><strong>Transporta 6 m:</strong> ${textoSeis(t)}</p>
       <p><strong>Tipos de veículo:</strong> ${textoVeiculos(t)}</p>

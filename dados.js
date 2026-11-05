@@ -202,7 +202,7 @@ const transportadoras = [
   },
   {
     id: "pelantir",
-    nome: "Tanea Alexandre Pelandir",
+    nome: "Tanea Alexandre Pelandir (Pelantir)",
     regioes: ["Curitiba", "Região Metropolitana de Curitiba", "União da Vitória", "Bituruna", "Guarapuava"],
     transporta6m: "nao",
     limitesPorRegiao: [],

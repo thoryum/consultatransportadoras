@@ -4,15 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Magmetal | Consulta de Transportadoras</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
   <header>
     <img src="img/maglogo.webp" alt="Magmetal">
     <h1>Consulta de Transportadoras</h1>
+    <nav class="abas">
+      <button type="button" class="aba ativa" data-aba="transportadoras">Transportadoras</button>
+      <button type="button" class="aba" data-aba="cotacoes">Cotações</button>
+    </nav>
   </header>
 
-  <main>
+  <!-- ABA 1: transportadoras -->
+  <main id="aba-transportadoras">
     <div class="filtros">
       <input type="text" id="busca" placeholder="Buscar transportadora, região ou cidade...">
       <select id="filtroRegiao">
@@ -26,12 +31,72 @@
     <div id="lista"></div>
   </main>
 
-  <script src="dados.js"></script>
-  <script src="cobertura.js"></script>
-  <script src="cobertura-efitrans.js"></script>
-  <script src="cobertura-turbo.js"></script>
-  <script src="cobertura-gamper.js"></script>
-  <script src="cobertura-aceville.js"></script>
-  <script src="script.js"></script>
+  <!-- ABA 2: cotações -->
+  <main id="aba-cotacoes" hidden>
+    <section class="cartao">
+      <h2>Registrar cotação</h2>
+      <p class="aviso">Os arquivos ficam salvos só neste navegador, neste computador. Use "Exportar backup" com frequência.</p>
+
+      <form id="formCotacao">
+        <div class="campos">
+          <label class="campo">Cliente
+            <input type="text" id="cotCliente" required>
+          </label>
+          <label class="campo">Código da cotação
+            <input type="text" id="cotCodigo" required>
+          </label>
+          <label class="campo">Transportadora
+            <select id="cotTransportadora" required>
+              <option value="">Selecione...</option>
+            </select>
+          </label>
+          <label class="campo">Valor do frete (opcional)
+            <input type="text" id="cotValor" inputmode="decimal" placeholder="Ex.: 1500,00">
+          </label>
+          <label class="campo">Vendedor
+            <input type="text" id="cotVendedor" placeholder="Seu nome">
+          </label>
+          <label class="campo">Observação (opcional)
+            <input type="text" id="cotObs">
+          </label>
+        </div>
+
+        <label class="campo">Foto ou documento (até 5 arquivos)
+          <input type="file" id="cotArquivos" accept="image/*,.pdf,.doc,.docx,.xls,.xlsx" multiple required>
+        </label>
+        <p id="cotPrevia" class="previa"></p>
+
+        <div class="acoes">
+          <button type="submit" id="cotSalvar" class="botao">Salvar cotação</button>
+          <span id="cotMensagem"></span>
+        </div>
+      </form>
+    </section>
+
+    <section>
+      <h2 class="titulo-secao">Cotações registradas</h2>
+      <div class="barra">
+        <input type="text" id="cotBusca" placeholder="Buscar por cliente, código ou vendedor...">
+        <select id="cotFiltroTransportadora">
+          <option value="">Todas as transportadoras</option>
+        </select>
+        <button type="button" id="cotExportar" class="botao secundario">Exportar backup</button>
+        <label class="botao secundario">Importar backup
+          <input type="file" id="cotImportar" accept="application/json,.json" hidden>
+        </label>
+      </div>
+      <p id="cotResumo" class="resumo"></p>
+      <div id="cotLista"></div>
+    </section>
+  </main>
+
+  <script src="dados.js?v=3"></script>
+  <script src="cobertura.js?v=3"></script>
+  <script src="cobertura-efitrans.js?v=3"></script>
+  <script src="cobertura-turbo.js?v=3"></script>
+  <script src="cobertura-gamper.js?v=3"></script>
+  <script src="cobertura-aceville.js?v=3"></script>
+  <script src="script.js?v=3"></script>
+  <script src="cotacoes.js?v=3"></script>
 </body>
 </html>
